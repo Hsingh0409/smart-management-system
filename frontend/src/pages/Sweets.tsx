@@ -19,7 +19,7 @@ export default function Sweets() {
         queryKey: ['sweets', filters],
         queryFn: async () => {
             const hasFilters = filters.q || filters.category || filters.minPrice || filters.maxPrice;
-            
+
             if (hasFilters) {
                 return sweetsAPI.search({
                     q: filters.q || undefined,
@@ -28,7 +28,7 @@ export default function Sweets() {
                     maxPrice: filters.maxPrice ? parseFloat(filters.maxPrice) : undefined,
                 });
             }
-            
+
             return sweetsAPI.getAll();
         },
     });

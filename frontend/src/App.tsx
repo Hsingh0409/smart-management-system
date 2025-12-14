@@ -5,6 +5,7 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import Sweets from '@/pages/Sweets';
+import Admin from '@/pages/Admin';
 import { useAuthStore } from '@/store/authStore';
 
 const queryClient = new QueryClient({
@@ -17,7 +18,51 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+    const { isAuthenticated, user } = useAuthStore();
+
+    return (
+        <QueryClientProvider client={queryClient}>
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        isAuthenticated ? (
+                            <Navigate to="/sweets" replace />
+                        ) : (
+                            <Navigate to="/login" replace />
+                        )
+                    }
+                />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route
+                    path="/sweets"
+                    element={
+                        <ProtectedRoute>
+                            <Layout>
+                                <Sweets />
+                            </Layout>
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin"
+                    element={
+                        <ProtectedRoute>
+                            {user?.role === 'admin' ? (
+                                <Layout>
+                                    <Admin />
+                                </Layout>
+                            ) : (
+                                <Navigate to="/sweets" replace />
+                            )}
+                        </ProtectedRoute>
+                    }
+                />
+            </Routes>
+        </QueryClientProvider>
+    );
+}
 
     return (
         <QueryClientProvider client={queryClient}>
