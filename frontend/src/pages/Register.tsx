@@ -32,7 +32,7 @@ export default function Register() {
         onError: (error: any) => {
             setError(
                 error.response?.data?.error?.message ||
-                    'Registration failed. Please try again.'
+                'Registration failed. Please try again.'
             );
         },
     });
