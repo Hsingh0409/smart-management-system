@@ -1,24 +1,52 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Layout from '@/components/Layout';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import Sweets from '@/pages/Sweets';
+import { useAuthStore } from '@/store/authStore';
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+            retry: 1,
+        },
+    },
+});
 
 function App() {
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
     return (
-        <div className="min-h-screen bg-background">
+        <QueryClientProvider client={queryClient}>
             <Routes>
-                <Route path="/" element={
-                    <div className="flex items-center justify-center min-h-screen">
-                        <div className="text-center">
-                            <h1 className="text-4xl font-bold text-primary mb-4">
-                                🍬 Sweet Shop Management
-                            </h1>
-                            <p className="text-muted-foreground">
-                                Setup complete! Ready to start development.
-                            </p>
-                        </div>
-                    </div>
-                } />
+                <Route
+                    path="/"
+                    element={
+                        isAuthenticated ? (
+                            <Navigate to="/sweets" replace />
+                        ) : (
+                            <Navigate to="/login" replace />
+                        )
+                    }
+                />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route
+                    path="/sweets"
+                    element={
+                        <ProtectedRoute>
+                            <Layout>
+                                <Sweets />
+                            </Layout>
+                        </ProtectedRoute>
+                    }
+                />
             </Routes>
-        </div>
-    )
+        </QueryClientProvider>
+    );
 }
 
-export default App
+export default App;
