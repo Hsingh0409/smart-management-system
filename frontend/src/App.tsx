@@ -64,34 +64,4 @@ function App() {
     );
 }
 
-    return (
-        <QueryClientProvider client={queryClient}>
-            <Routes>
-                <Route
-                    path="/"
-                    element={
-                        isAuthenticated ? (
-                            <Navigate to="/sweets" replace />
-                        ) : (
-                            <Navigate to="/login" replace />
-                        )
-                    }
-                />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route
-                    path="/sweets"
-                    element={
-                        <ProtectedRoute>
-                            <Layout>
-                                <Sweets />
-                            </Layout>
-                        </ProtectedRoute>
-                    }
-                />
-            </Routes>
-        </QueryClientProvider>
-    );
-}
-
 export default App;

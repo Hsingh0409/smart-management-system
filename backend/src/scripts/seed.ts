@@ -17,19 +17,17 @@ const seedData = async () => {
         console.log('Cleared existing data');
 
         // Create admin user
-        const adminPassword = await bcrypt.hash('admin123', 10);
         const admin = await User.create({
-            email: 'admin@sweetshop.com',
-            password: adminPassword,
+            email: '23bsc10066@cuchd.in',
+            password: 'admin123',
             role: 'admin',
         });
-        console.log('✅ Admin user created: admin@sweetshop.com / admin123');
+        console.log('✅ Admin user created: 23bsc10066@cuchd.in / admin123');
 
         // Create regular user
-        const userPassword = await bcrypt.hash('user123', 10);
         await User.create({
             email: 'user@sweetshop.com',
-            password: userPassword,
+            password: 'user123',
             role: 'user',
         });
         console.log('✅ Regular user created: user@sweetshop.com / user123');
@@ -107,7 +105,7 @@ const seedData = async () => {
 
         console.log('\n🎉 Database seeded successfully!');
         console.log('\nYou can now login with:');
-        console.log('  Admin: admin@sweetshop.com / admin123');
+        console.log('  Admin: 23bsc10066@cuchd.in / admin123');
         console.log('  User:  user@sweetshop.com / user123');
 
         process.exit(0);
