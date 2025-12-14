@@ -6,23 +6,23 @@ const router = Router();
 
 // Validation rules
 const registerValidation = [
-  body('email')
-    .isEmail()
-    .withMessage('Please provide a valid email')
-    .normalizeEmail(),
-  body('password')
-    .isLength({ min: 6 })
-    .withMessage('Password must be at least 6 characters'),
+    body('email')
+        .isEmail()
+        .withMessage('Please provide a valid email')
+        .normalizeEmail(),
+    body('password')
+        .isLength({ min: 6 })
+        .withMessage('Password must be at least 6 characters'),
 ];
 
 const loginValidation = [
-  body('email')
-    .isEmail()
-    .withMessage('Please provide a valid email')
-    .normalizeEmail(),
-  body('password')
-    .notEmpty()
-    .withMessage('Password is required'),
+    body('email')
+        .isEmail()
+        .withMessage('Please provide a valid email')
+        .normalizeEmail(),
+    body('password')
+        .notEmpty()
+        .withMessage('Password is required'),
 ];
 
 // Routes

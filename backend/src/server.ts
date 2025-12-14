@@ -29,12 +29,12 @@ app.use('/api/auth', authRoutes);
 
 // Error handling middleware
 app.use((err: any, req: Request, res: Response, next: any) => {
-  console.error(err.stack);
-  res.status(err.status || 500).json({
-    error: {
-      message: err.message || 'Internal Server Error',
-    },
-  });
+    console.error(err.stack);
+    res.status(err.status || 500).json({
+        error: {
+            message: err.message || 'Internal Server Error',
+        },
+    });
 });
 
 // Export app for testing
@@ -42,22 +42,22 @@ export default app;
 
 // Start server only if not in test environment
 if (process.env.NODE_ENV !== 'test' && require.main === module) {
-  const PORT = process.env.PORT || 5000;
+    const PORT = process.env.PORT || 5000;
 
-  const startServer = async () => {
-    try {
-      // Connect to MongoDB
-      await connectDB();
-      
-      app.listen(PORT, () => {
-        console.log(`🚀 Server running on port ${PORT}`);
-        console.log(`📝 Environment: ${process.env.NODE_ENV}`);
-      });
-    } catch (error) {
-      console.error('Failed to start server:', error);
-      process.exit(1);
-    }
-  };
+    const startServer = async () => {
+        try {
+            // Connect to MongoDB
+            await connectDB();
 
-  startServer();
+            app.listen(PORT, () => {
+                console.log(`🚀 Server running on port ${PORT}`);
+                console.log(`📝 Environment: ${process.env.NODE_ENV}`);
+            });
+        } catch (error) {
+            console.error('Failed to start server:', error);
+            process.exit(1);
+        }
+    };
+
+    startServer();
 }
