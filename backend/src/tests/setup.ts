@@ -7,7 +7,7 @@ beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
   const mongoUri = mongoServer.getUri();
   await mongoose.connect(mongoUri);
-});
+}, 60000); // 60 second timeout for MongoDB setup
 
 afterAll(async () => {
   await mongoose.disconnect();
