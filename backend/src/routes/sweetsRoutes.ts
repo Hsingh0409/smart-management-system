@@ -7,6 +7,8 @@ import {
     createSweet,
     updateSweet,
     deleteSweet,
+    purchaseSweet,
+    restockSweet,
 } from '../controllers/sweetsController';
 import { authMiddleware, adminMiddleware } from '../middleware/auth';
 
@@ -38,16 +40,25 @@ const updateSweetValidation = [
         .withMessage('Quantity must be a non-negative integer'),
 ];
 
+// Validation rules for purchase/restock
+const quantityValidation = [
+    body('quantity')
+        .isInt({ min: 1 })
+        .withMessage('Quantity must be at least 1'),
+];
+
 // Public routes
 router.get('/search', searchSweets);
 router.get('/:id', getSweet);
 
 // Protected routes (require authentication)
 router.get('/', authMiddleware, getSweets);
+router.post('/:id/purchase', authMiddleware, quantityValidation, purchaseSweet);
 
 // Admin only routes
 router.post('/', authMiddleware, adminMiddleware, createSweetValidation, createSweet);
 router.put('/:id', authMiddleware, adminMiddleware, updateSweetValidation, updateSweet);
 router.delete('/:id', authMiddleware, adminMiddleware, deleteSweet);
+router.post('/:id/restock', authMiddleware, adminMiddleware, quantityValidation, restockSweet);
 
 export default router;
