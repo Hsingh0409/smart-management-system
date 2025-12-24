@@ -180,7 +180,7 @@ _Deployment link will be added here_
 
 ## 👤 Author
 
-Dilip
+Hemant Singh
 
 ## 📄 License
 
